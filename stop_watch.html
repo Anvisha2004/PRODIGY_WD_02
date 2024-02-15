@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stopwatch using HTML, CSS, and JavaScript</title>
+    <style>
+        /* Add your custom CSS styles here */
+        .container {
+            text-align: center;
+            border: 3px solid;
+            border-color: black;
+            width: 350px;
+            justify-content: center;
+            margin-left: 560px;
+            height:250px;
+            top:20px;
+            border-radius: 50px;
+            backdrop-filter: blur(20px);
+    box-shadow: 0 0 20px #454b4f;
+    background: transparent;
+        
+        }
+        #time {
+            font-size: 24px;
+            margin: 10px;
+            padding:10px;
+            color: #000000;
+        }
+        .btn {
+            margin: 10px;
+            padding: 5px 10px;
+            font-size: 16px;
+            border: 2px solid #000000;
+            border-radius: 20px;
+            box-shadow: #686565;
+        }
+        .buttons{
+            color: rgb(0, 0, 0);
+            font-size: 40px;
+            
+        }
+        h1{
+            text-align: center;
+            font-size: 36px;
+            color: rgb(78, 14, 14);
+        }
+        body{
+            background-image: url('stopwatchbg.png');
+              background-repeat: no-repeat;
+              background-attachment: fixed;
+              background-size:100%;
+              margin: 10px;
+              padding: 0px;
+
+        }
+    </style>
+    
+</head>
+<body style="background-image: url(stopwatchbg.png)";>
+    <div class="container">
+        <h1>My Stopwatch</h1>
+        <div id="time">
+            <span class="digit" id="hr">00</span>
+            <span class="txt">Hr</span>
+            <span class="digit" id="min">00</span>
+            <span class="txt">Min</span>
+            <span class="digit" id="sec">00</span>
+            <span class="txt">Sec</span>
+            <span class="digit" id="count">00</span>
+        </div>
+        <div class="buttons">
+            <button class="btn" id="start">Start</button>
+            <button class="btn" id="stop">Stop</button>
+            <button class="btn" id="reset">Reset</button>
+        </div>
+    </div>
+    <script>
+        // Add your JavaScript logic here
+        const hrElement = document.getElementById('hr');
+        const minElement = document.getElementById('min');
+        const secElement = document.getElementById('sec');
+        const countElement = document.getElementById('count');
+
+        let timer;
+        let totalMilliseconds = 0;
+
+        function updateTimer() {
+            const hours = Math.floor(totalMilliseconds / 3600000);
+            const minutes = Math.floor((totalMilliseconds % 3600000) / 60000);
+            const seconds = Math.floor((totalMilliseconds % 60000) / 1000);
+            const milliseconds = totalMilliseconds % 1000;
+
+            hrElement.textContent = hours.toString().padStart(2, '0');
+            minElement.textContent = minutes.toString().padStart(2, '0');
+            secElement.textContent = seconds.toString().padStart(2, '0');
+            countElement.textContent = milliseconds.toString().padStart(2, '0');
+        }
+
+        function startTimer() {
+            if (!timer) {
+                timer = setInterval(() => {
+                    totalMilliseconds += 10;
+                    updateTimer();
+                }, 10);
+            }
+        }
+
+        function stopTimer() {
+            clearInterval(timer);
+            timer = null;
+        }
+
+        function resetTimer() {
+            totalMilliseconds = 0;
+            updateTimer();
+        }
+
+        document.getElementById('start').addEventListener('click', startTimer);
+        document.getElementById('stop').addEventListener('click', stopTimer);
+        document.getElementById('reset').addEventListener('click', resetTimer);
+    </script>
+</body>
+</html>
